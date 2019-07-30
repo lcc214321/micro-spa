@@ -2,13 +2,16 @@ const path = require('path');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const config = require('../config');
 
 module.exports = {
   entry: path.join(__dirname, '../src/main.js'),
   output: {
     filename: '[name].[hash].js',
     path: path.join(__dirname, '../dist'),
-    publicPath: '/',
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.publicPath
+      : config.dev.publicPath
   },
   module: {
     rules: [

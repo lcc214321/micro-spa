@@ -7,7 +7,7 @@ const moduleList = {
   test: true,
   home: true
 }
-const modulePath = path.resolve('../public/module-lib');
+const modulePath = path.resolve(__dirname, '../public/module-lib');
 // script标签链接
 let scriptStr = '';
 
@@ -24,7 +24,7 @@ for (let i = 0; i < files.length; i++) {
 
 console.log('读取html文件...');
 // index.html文件读取
-const htmlPath = path.resolve('../public/index.template.html');
+const htmlPath = path.resolve(__dirname, '../public/index.html');
 // 读取文件内容
 let htmlData = fs.readFileSync(htmlPath, 'utf-8');
 console.log(htmlData);

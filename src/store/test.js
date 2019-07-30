@@ -1,7 +1,7 @@
 const test = {
   namespaced: true,
   state: {
-    testId: 33333333333,
+    testId: 33333333333
   }
 }
 

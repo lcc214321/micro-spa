@@ -63,7 +63,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../public/index.template.html'),
+      template: path.join(__dirname, '../public/index.html'),
       inject: true
     }),
     new MiniCssExtractPlugin({

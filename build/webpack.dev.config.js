@@ -13,11 +13,11 @@ module.exports = merge(baseWebpackConfig, {
     contentBase: path.join(__dirname, '../dist'),
     compress: true,
     hot: true,
-    publicPath: '/',
+    publicPath: config.dev.publicPath,
     // noInfo: true,
-    host: config.devServer.host || 'localhost',
-    port: config.devServer.port || 8080,
-    proxy: config.devServer.proxy || {},
+    host: config.dev.host || 'localhost',
+    port: config.dev.port || 8080,
+    proxy: config.dev.proxy || {},
     stats: 'minimal'
   },
   module: {
@@ -35,7 +35,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../public/index.template.html'),
+      template: path.join(__dirname, '../public/index.html'),
       inject: true
     }),
     // 模块热替换

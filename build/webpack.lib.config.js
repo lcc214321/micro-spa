@@ -1,16 +1,21 @@
 const path = require('path');
-const merge = require('webpack-merge');
-const baseWebpackConfig = require('./webpack.base.config');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const config = require('../config');
 
-module.exports = merge(baseWebpackConfig, {
+module.exports = {
   mode: 'production',
-  entry: path.join(__dirname, '../lib/test.js'),
+  entry: {
+    test: path.join(__dirname, '../lib/test.js'),
+    home: path.join(__dirname, '../lib/home.js'),
+  },
   output: {
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
     path: path.join(__dirname, '../package'),
-    publicPath: '/',
-    library: 'testModule',
+    // 兼容需要自定义包名的项目
+    publicPath: config.build.publicPath + 'module-lib/',
+    library: 'module[name]',
     libraryTarget: 'umd'
   },
   optimization: {
@@ -41,6 +46,40 @@ module.exports = merge(baseWebpackConfig, {
   module: {
     rules: [
       {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.svg$/,
+        loader: "svg-sprite-loader",
+        options: {
+          symbolId: "icon-[name]"
+        }
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 1,
+          // 图片导出路径
+          outputPath: 'images/'
+        }
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+        }
+      },
+      {
         test: /\.js$/,
         include: path.join(__dirname, "../src"),
         exclude: /(node_modules|bower_components)/,
@@ -64,7 +103,8 @@ module.exports = merge(baseWebpackConfig, {
     ]
   },
   plugins: [
-    new UglifyJsPlugin()
+    new UglifyJsPlugin(),
+    new FriendlyErrorsWebpackPlugin(),
+    new VueLoaderPlugin(),
   ]
-})
-
+}

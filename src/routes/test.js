@@ -1,13 +1,12 @@
-import test from '../view/test.vue';
-import testChild from '../view/test-child1.vue';
+// import testChild from '../view/test-child1.vue';
 
 const testRoutes = [{
   path: '/test',
-  component: test,
+  component: () => import('../view/test.vue'),
   children: [{
-    path: '1',
-    // component: () => import('../view/test-child1.vue')
-    component: testChild
+    path: 'a',
+    component: () => import('../view/test-child1.vue')
+    // component: testChild
   }]
 }];
 

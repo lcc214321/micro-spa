@@ -9,8 +9,4 @@ export default {
 </script>
 
 <style>
-.home {
-  /* background: url('../assets/images/test.jpg'); */
-}
 </style>
-
